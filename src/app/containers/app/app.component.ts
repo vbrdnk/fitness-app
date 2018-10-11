@@ -1,14 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+
+import { Store } from 'store';
+
+// services
+import { AuthService, User } from '../../../auth/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
   styleUrls: ['app.component.scss'],
-  template: `
-    <div>
-      Hello Ultimate Angular!
-    </div>
-  `
+  templateUrl: 'app.component.html'
 })
-export class AppComponent {
-  constructor() {}
+export class AppComponent implements OnInit, OnDestroy {
+  public user$: Observable<User>;
+  private subscription: Subscription;
+  
+  constructor(private authService: AuthService, private store: Store) {}
+
+  ngOnInit() {
+    this.subscription = this.authService.auth$.subscribe();
+    this.user$ = this.store.select<User>('user');
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }
