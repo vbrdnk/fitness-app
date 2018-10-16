@@ -1,6 +1,7 @@
 # Project
 .idea
 .vscode
+.firebase
 
 # Node
 node_modules

@@ -28,9 +28,7 @@ export class MealsService {
 
     public meals$: Observable<any> = this.db.list(`meals/${this.uid}`)
         .do(next => this.store.set('meals', next));
-    /**
-     *
-     */
+    
     constructor(private store: Store, private db: AngularFireDatabase, private authService: AuthService) {
     }
 
@@ -50,6 +48,10 @@ export class MealsService {
 
     public addMeal(meal: Meal) {
         return this.db.list(`meals/${this.uid}`).push(meal);
+    }
+
+    public updateMeal(key: string, meal: Meal) {
+        return this.db.object(`meals/${this.uid}/${key}`).update(meal);
     }
 
     public removeMeal(key: string) {
