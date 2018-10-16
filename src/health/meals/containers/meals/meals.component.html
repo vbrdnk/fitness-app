@@ -19,7 +19,8 @@
         <!-- meals ngFor -->
         <list-item 
             *ngFor='let meal of meals'
-            [item]='meal'>
+            [item]='meal'
+            (remove)='removeMeal($event)'>
         </list-item>
     </div>
     <ng-template #loading>

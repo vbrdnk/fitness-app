@@ -7,6 +7,9 @@ import { Store } from 'store';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 
 // services
 import { AuthService } from '../../../../auth/shared/services/auth/auth.service';
@@ -35,7 +38,21 @@ export class MealsService {
         return this.authService.user.uid;
     }
 
+    public getMeal(key: string): Observable<any> {
+        if (!key) {
+            return Observable.of({});
+        }
+
+        return this.store.select<Meal[]>('meals')
+            .filter(Boolean)
+            .map((meals) => meals.find((meal: Meal) => meal.$key === key));
+    }
+
     public addMeal(meal: Meal) {
         return this.db.list(`meals/${this.uid}`).push(meal);
+    }
+
+    public removeMeal(key: string) {
+        return this.db.list(`meals/${this.uid}`).remove(key);
     }
 }
