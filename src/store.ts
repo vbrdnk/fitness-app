@@ -7,17 +7,24 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { User } from './auth/shared/services/auth/auth.service';
 import { Meal } from './health/shared/services/meals/meals.service';
 import { Workout } from './health/shared/services/workouts/workouts.service';
+import { ScheduleItem } from './health/shared/services/schedule/schedule.service';
 
 export interface State {
   user: User,
   meals: Meal[],
+  selected: any,
+  schedule: ScheduleItem[],
   workouts: Workout[],
+  date: Date,
   [key: string]: any
 }
 
 const state: State = {
   user: undefined,
   meals: undefined,
+  selected: undefined,
+  schedule: undefined,
+  date: undefined,
   workouts: undefined
 };
 

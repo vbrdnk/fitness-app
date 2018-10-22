@@ -15,7 +15,7 @@ export class ListItemComponent {
     }
 
     public getRoute(item: any): string[] {
-        return [ `../meals`, item.$key ];
+        return [ `../${item.ingredients ? 'meals' : 'workouts'}`, item.$key ];
     }
 
     public toggle(): void {

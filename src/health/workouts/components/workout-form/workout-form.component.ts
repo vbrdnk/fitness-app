@@ -20,27 +20,33 @@ export class WorkoutFormComponent implements OnChanges {
 
     public form: FormGroup = this.fb.group({
         name: ['', Validators.required],
-        type: 'strength'
+        type: 'strength',
+        strength: this.fb.group({
+            reps: 0,
+            sets: 0,
+            weight: 0
+        }),
+        endurance: this.fb.group({
+            distance: 0,
+            duration: 0
+        })
     });
 
     constructor(private fb: FormBuilder) {
     }
 
+    get placeholder(): string {
+        return `e.g. ${this.form.get('type').value === 'strength' ? 'Benchpress' : 'Treadmill' }`;
+    }
+
     ngOnChanges(changes: SimpleChanges) {
-        // if (this.meal && this.meal.name) {
-        //     // existing
-        //     this.exists = true;
-        //     this.emptyIngredients();
+        if (this.workout && this.workout.name) {
+            // existing
+            this.exists = true;
 
-        //     const value = this.meal;
-        //     this.form.patchValue(value);
-
-        //     if (value.ingredients) {
-        //         for (const item of value.ingredients) {
-        //             this.ingredients.push(new FormControl(item));
-        //         }
-        //     }
-        // }
+            const value = this.workout;
+            this.form.patchValue(value);
+        }
     }
 
     get requiredError() {
@@ -50,21 +56,9 @@ export class WorkoutFormComponent implements OnChanges {
         );
     }
 
-    // get ingredients(): FormArray {
-    //     return this.form.get('ingredients') as FormArray;
-    // }
-
     public toggle() {
         this.toggled = !this.toggled;
     }
-
-    // public addIngredient(): void {
-    //     this.ingredients.push(new FormControl(''));
-    // }
-
-    // public removeIngredient(index: number): void {
-    //     this.ingredients.removeAt(index);
-    // }
 
     public createWorkout(): void {
         if (this.form.valid) {
@@ -81,10 +75,4 @@ export class WorkoutFormComponent implements OnChanges {
     public removeWorkout(): void {
         this.remove.emit(this.form.value);
     }
-
-    // private emptyIngredients(): void {
-    //     while (this.ingredients.controls.length) {
-    //         this.ingredients.removeAt(0);
-    //     }
-    // }
 }
