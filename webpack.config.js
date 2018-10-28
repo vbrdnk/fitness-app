@@ -4,7 +4,17 @@ const typescript = require('typescript');
 const { AotPlugin } = require('@ngtools/webpack');
 
 const rules = [
-  { test: /\.html$/, loader: 'html-loader' },
+  { test: /\.html$/, 
+    use: [{
+      loader: 'html-loader',
+      options: {
+          minimize: false,
+          removeComments: false,
+          collapseWhitespace: false,
+          removeAttributeQuotes: false,
+      }
+  }],
+ },
   { test: /\.scss$/, loaders: ['raw-loader', 'sass-loader'] },
   { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader' }
 ];
