@@ -61,6 +61,7 @@ export class ScheduleCalendarComponent implements OnChanges {
         this.select.emit({
             type,
             assigned,
+            section,
             day,
             data
         });

@@ -8,6 +8,8 @@
     <schedule-assign
         *ngIf='open'
         [section]='selected$ | async'
-        [list]='list$ | async'>
+        [list]='list$ | async'
+        (update)="assignItem($event)"
+        (cancel)="closeAssign()">
     </schedule-assign>
 </div>
